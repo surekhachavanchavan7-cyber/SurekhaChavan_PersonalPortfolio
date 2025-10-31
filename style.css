@@ -1,0 +1,364 @@
+/* Theme & base */
+:root {
+  --bg: #0b101b;
+  --panel: #0f172a;
+  --text: #e2e8f0;
+  --muted: #94a3b8;
+  --brand: #7c3aed;
+  --ring: rgba(124, 58, 237, 0.35);
+}
+* {
+  box-sizing: border-box;
+}
+html {
+  scroll-behavior: smooth;
+}
+body {
+  margin: 0;
+  font-family: Arial, system-ui, -apple-system, Segoe UI, Roboto;
+  color: var(--text);
+  background: var(--bg);
+}
+img {
+  display: block;
+  max-width: 100%;
+}
+a {
+  color: inherit;
+  text-decoration: none;
+}
+.container {
+  width: min(1100px, 92%);
+  margin-inline: auto;
+}
+.muted {
+  color: var(--muted);
+}
+
+/* Header / Nav */
+header {
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  background: rgba(15, 23, 42, 0.9);
+  backdrop-filter: blur(8px);
+  border-bottom: 1px solid rgba(148, 163, 184, 0.15);
+}
+.nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 0;
+}
+.brand {
+  font-weight: 800;
+  letter-spacing: 0.4px;
+}
+.brand b {
+  color: var(--brand);
+}
+#menu {
+  list-style: none;
+  display: flex;
+  gap: 18px;
+  margin: 0;
+  padding: 0;
+}
+#menu a {
+  padding: 8px 10px;
+  border-radius: 10px;
+}
+#menu a:hover {
+  background: rgba(124, 58, 237, 0.14);
+}
+.navlink.active {
+  background: var(--brand);
+  color: #fff;
+}
+.burger {
+  display: none;
+  background: none;
+  border: 0;
+  color: var(--text);
+  font-size: 22px;
+  cursor: pointer;
+}
+@media (max-width: 780px) {
+  .burger {
+    display: block;
+  }
+  #menu {
+    position: fixed;
+    inset: 60px 16px auto 16px;
+    display: none;
+    flex-direction: column;
+    padding: 14px;
+    border-radius: 14px;
+    background: var(--panel);
+    border: 1px solid rgba(148, 163, 184, 0.2);
+  }
+  #menu.open {
+    display: flex;
+  }
+}
+
+/* Hero */
+.hero {
+  display: grid;
+  grid-template-columns: 1.2fr 0.8fr;
+  gap: 26px;
+  align-items: center;
+  padding: 54px 0;
+}
+.hero h1 {
+  font-size: clamp(28px, 4vw, 42px);
+  line-height: 1.15;
+  margin: 0.2em 0;
+}
+.hero p {
+  color: var(--muted);
+}
+.cta {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+  margin-top: 12px;
+}
+.btn {
+  background: var(--brand);
+  color: #fff;
+  border: 1px solid rgba(124, 58, 237, 0.5);
+  padding: 10px 16px;
+  border-radius: 10px;
+  font-weight: 600;
+  cursor: pointer;
+}
+.btn.secondary {
+  background: transparent;
+  color: var(--text);
+  border-color: rgba(148, 163, 184, 0.35);
+}
+.btn:hover {
+  filter: brightness(1.05);
+  transform: translateY(-1px);
+}
+.card {
+  background: linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 0.04),
+    rgba(255, 255, 255, 0.02)
+  );
+  border: 1px solid rgba(148, 163, 184, 0.2);
+  border-radius: 16px;
+  padding: 24px;
+}
+.hero-photo {
+  display: grid;
+  place-items: center;
+}
+.avatar {
+  width: 220px;
+  height: 280px;
+  object-fit: cover;
+  border-radius: 8px;
+  border: 2px solid rgba(148, 163, 184, 0.3);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+}
+@media (max-width: 980px) {
+  .hero {
+    grid-template-columns: 1fr;
+  }
+}
+@media (max-width: 768px) {
+  .avatar {
+    width: 160px;
+    height: 210px;
+  }
+}
+
+/* Sections */
+section {
+  padding: 64px 0;
+  scroll-margin-top: 84px;
+}
+.section-head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  margin-bottom: 12px;
+}
+.section-head h2 {
+  margin: 0;
+  font-size: clamp(22px, 3vw, 32px);
+}
+.section-head p {
+  margin: 0;
+  color: var(--muted);
+}
+.about .bullets {
+  padding-left: 18px;
+}
+.skills {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin-top: 10px;
+}
+.chip {
+  padding: 4px 10px;
+  border-radius: 999px;
+  border: 1px solid rgba(148, 163, 184, 0.25);
+  color: var(--muted);
+  font-size: 12px;
+}
+
+/* Projects */
+.grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 18px;
+}
+@media (max-width: 980px) {
+  .grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+@media (max-width: 600px) {
+  .grid {
+    grid-template-columns: 1fr;
+  }
+}
+.project {
+  border: 1px solid rgba(148, 163, 184, 0.2);
+  border-radius: 14px;
+  overflow: hidden;
+  background: #0e1528;
+}
+.project img {
+  height: 180px;
+  width: 100%;
+  object-fit: cover;
+}
+.project .content {
+  padding: 12px;
+}
+.project h3 {
+  margin: 0 0 6px 0;
+}
+
+/* Contact */
+.center {
+  text-align: center;
+  margin-bottom: 20px;
+}
+.center a {
+  color: #7c3aed;
+  text-decoration: none;
+  font-weight: 600;
+}
+.center a:hover {
+  text-decoration: underline;
+}
+
+.contact-head {
+  text-align: center;
+  margin-bottom: 8px;
+}
+.contact-wrap {
+  display: grid;
+  place-items: center;
+}
+.contact-card {
+  width: 100%;
+  max-width: 640px;
+  background: linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 0.04),
+    rgba(255, 255, 255, 0.02)
+  );
+  border: 1px solid rgba(148, 163, 184, 0.18);
+  border-radius: 16px;
+  padding: 20px;
+}
+#contactForm {
+  display: grid;
+  gap: 14px;
+}
+.form-row {
+  display: grid;
+  gap: 6px;
+}
+.form-row label {
+  font-size: 14px;
+  color: var(--muted);
+}
+#contactForm input,
+#contactForm textarea {
+  width: 100%;
+  padding: 12px 14px;
+  border-radius: 12px;
+  border: 1px solid rgba(148, 163, 184, 0.28);
+  background: #0b1325;
+  color: var(--text);
+  outline: none;
+}
+#contactForm input::placeholder,
+#contactForm textarea::placeholder {
+  color: #8894a6;
+}
+#contactForm input:focus,
+#contactForm textarea:focus {
+  border-color: var(--brand);
+  box-shadow: 0 0 0 3px var(--ring);
+}
+#contactForm textarea {
+  min-height: 140px;
+  resize: vertical;
+}
+.btn-primary {
+  width: 100%;
+  border: 1px solid rgba(124, 58, 237, 0.5);
+  border-radius: 12px;
+  font-weight: 700;
+  padding: 12px 16px;
+}
+@media (min-width: 640px) {
+  .btn-primary {
+    width: auto;
+    align-self: start;
+  }
+}
+.error {
+  display: none;
+  color: #fecaca;
+  font-size: 13px;
+}
+.success {
+  display: none;
+  margin-top: 6px;
+  background: #052e1a;
+  color: #86efac;
+  border: 1px solid #14532d;
+  border-radius: 10px;
+  padding: 10px;
+}
+
+/* Footer & Top button */
+footer {
+  padding: 28px 0;
+  color: var(--muted);
+  text-align: center;
+  border-top: 1px solid rgba(148, 163, 184, 0.15);
+}
+#topBtn {
+  position: fixed;
+  right: 16px;
+  bottom: 20px;
+  opacity: 0;
+  pointer-events: none;
+  transition: 0.25s;
+}
+#topBtn.show {
+  opacity: 1;
+  pointer-events: auto;
+}
