@@ -1,71 +1,110 @@
-// Year
-document.getElementById("year").textContent = new Date().getFullYear();
+// =======================
+// Footer Year
+// =======================
+const yearEl = document.getElementById("year");
+if (yearEl) {
+  yearEl.textContent = new Date().getFullYear();
+}
 
-// Mobile menu
+// =======================
+// Mobile Menu Toggle
+// =======================
 const burger = document.getElementById("burger");
 const menu = document.getElementById("menu");
-burger.addEventListener("click", () => {
-  const open = menu.classList.toggle("open");
-  burger.setAttribute("aria-expanded", open ? "true" : "false");
-});
-document
-  .querySelectorAll("#menu a")
-  .forEach((a) =>
-    a.addEventListener("click", () => menu.classList.remove("open"))
+
+if (burger && menu) {
+  burger.addEventListener("click", () => {
+    const isOpen = menu.classList.toggle("open");
+    burger.setAttribute("aria-expanded", isOpen ? "true" : "false");
+  });
+
+  // Close menu on link click (mobile)
+  document.querySelectorAll("#menu a").forEach((link) => {
+    link.addEventListener("click", () => menu.classList.remove("open"));
+  });
+}
+
+// =======================
+// Active Navigation Highlight
+// =======================
+const sections = document.querySelectorAll("main[id], section[id]");
+const navLinks = document.querySelectorAll(".navlink");
+
+if (sections.length && navLinks.length) {
+  const observer = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          const currentId = entry.target.id;
+          navLinks.forEach((link) => {
+            link.classList.toggle(
+              "active",
+              link.getAttribute("href") === `#${currentId}`
+            );
+          });
+        }
+      });
+    },
+    { threshold: 0.6 }
   );
 
-// Active nav highlight
-const sections = document.querySelectorAll("main[id], section[id]");
-const links = document.querySelectorAll(".navlink");
-const io = new IntersectionObserver(
-  (entries) => {
-    entries.forEach((e) => {
-      if (e.isIntersecting) {
-        const id = e.target.id;
-        links.forEach((l) =>
-          l.classList.toggle("active", l.getAttribute("href") === `#${id}`)
-        );
-      }
-    });
-  },
-  { threshold: 0.6 }
-);
-sections.forEach((s) => io.observe(s));
+  sections.forEach((section) => observer.observe(section));
+}
 
-// Back-to-top button
+// =======================
+// Back to Top Button
+// =======================
 const topBtn = document.getElementById("topBtn");
-window.addEventListener("scroll", () => {
-  topBtn.classList.toggle("show", window.scrollY > 700);
-});
 
-// Contact form validation (demo only)
+if (topBtn) {
+  window.addEventListener("scroll", () => {
+    topBtn.classList.toggle("show", window.scrollY > 700);
+  });
+}
+
+// =======================
+// Contact Form Validation (Demo Only)
+// =======================
 const form = document.getElementById("contactForm");
-const success = document.getElementById("success");
+const successMsg = document.getElementById("success");
 
-const show = (id, on) =>
-  (document.getElementById(id).style.display = on ? "block" : "none");
-const emailOk = (v) => /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(v);
+// Utility functions
+const showError = (id, show) => {
+  const el = document.getElementById(id);
+  if (el) el.style.display = show ? "block" : "none";
+};
 
-form.addEventListener("submit", (e) => {
-  e.preventDefault();
-  const name = form.name.value.trim();
-  const email = form.email.value.trim();
-  const subject = form.subject.value.trim();
-  const message = form.message.value.trim();
+const isValidEmail = (value) => /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(value);
 
-  let ok = true;
-  show("err-name", name === "");
-  if (name === "") ok = false;
-  show("err-email", !emailOk(email));
-  if (!emailOk(email)) ok = false;
-  show("err-subject", subject === "");
-  if (subject === "") ok = false;
-  show("err-message", message.length < 10);
-  if (message.length < 10) ok = false;
+if (form) {
+  form.addEventListener("submit", (e) => {
+    e.preventDefault();
 
-  if (ok) {
-    success.style.display = "block";
-    form.reset();
-    setTimeout(() => (success.style.display = "none"), 3000);
-  }
-});
+    const name = form.name.value.trim();
+    const email = form.email.value.trim();
+    const subject = form.subject.value.trim();
+    const message = form.message.value.trim();
+
+    let isValid = true;
+
+    showError("err-name", name === "");
+    if (name === "") isValid = false;
+
+    showError("err-email", !isValidEmail(email));
+    if (!isValidEmail(email)) isValid = false;
+
+    showError("err-subject", subject === "");
+    if (subject === "") isValid = false;
+
+    showError("err-message", message.length < 10);
+    if (message.length < 10) isValid = false;
+
+    if (isValid) {
+      if (successMsg) {
+        successMsg.style.display = "block";
+        setTimeout(() => (successMsg.style.display = "none"), 3000);
+      }
+      form.reset();
+    }
+  });
+}
